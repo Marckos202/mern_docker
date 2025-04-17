@@ -1,0 +1,18 @@
+FROM node:19-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY pnpm-lock.yaml ./
+RUN npm install -g pnpm
+RUN pnpm install
+
+COPY src/ ./src/
+COPY .env ./
+COPY ./src/config.js ./src/
+
+EXPOSE 4000
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 CMD wget --no-verbose --tries=1 --spider http://backend.mern-app:4000/api/notes || exit 1
+
+CMD ["node", "src/index.js"]

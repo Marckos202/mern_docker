@@ -7,7 +7,7 @@ export function NotesList() {
 
   useEffect(() => {
     const getNotes = async () => {
-      const res = await axios.get("http://localhost:4000/api/notes");
+      const res = await axios.get("/api/notes");
       console.log(res);
       setNotes(res.data);
     };
@@ -15,7 +15,7 @@ export function NotesList() {
   }, []);
 
   async function deleteNote(noteId) {
-    const res = await axios.delete("http://localhost:4000/api/notes/" + noteId);
+    const res = await axios.delete("/api/notes/" + noteId);
     if (res.status === 204)
       setNotes([...notes.filter((note) => note._id !== noteId)]);
   }
