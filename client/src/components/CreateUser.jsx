@@ -1,5 +1,5 @@
-import React, { Component } from "react"
-import axios from "axios"
+import React, { Component } from 'react'
+import axios from 'axios'
 
 export default class CreateUser extends Component {
 
@@ -13,7 +13,7 @@ export default class CreateUser extends Component {
     }
 
     getUsers = async () => {
-        const res = await axios.get("/api/users");
+        const res = await axios.get('/api/users');
         this.setState({
             users: res.data
         });
@@ -27,7 +27,7 @@ export default class CreateUser extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
-        await axios.post("/api/users", {
+        await axios.post('/api/users', {
             username: this.state.username
         });
         this.setState({ username: '' });
@@ -37,7 +37,7 @@ export default class CreateUser extends Component {
     deleteUser = async (userId) => {
         const response = window.confirm('are you sure you want to delete it?');
         if (response) {
-            await axios.delete("/api/users/" + userId);
+            await axios.delete('/api/users/' + userId);
             this.getUsers();
         }
     }

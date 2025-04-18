@@ -3,13 +3,13 @@ FROM node:19-alpine
 WORKDIR /app
 
 COPY package*.json ./
-COPY pnpm-lock.yaml ./
 RUN npm install -g pnpm
 RUN pnpm install
 
-COPY src/ ./src/
-COPY .env ./
-COPY ./src/config.js ./src/
+
+COPY ./backend/src/ ./src/
+
+COPY ./backend/src/config.js ./src/
 
 EXPOSE 4000
 

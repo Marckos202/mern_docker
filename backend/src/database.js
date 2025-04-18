@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { MONGODB_URI } from "./config.js";
 
 try {
-  mongoose.set("strictQuery", false);
   const conn = await mongoose.connect(MONGODB_URI);
   console.log(`MongoDB Connected: ${conn.connection.host}`);
 } catch (error) {
