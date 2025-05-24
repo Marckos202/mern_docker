@@ -32,7 +32,16 @@ pipeline {
                     powershell "docker build -t ${env.FRONTEND_IMAGE_NAME}:${env.APP_VERSION} -f Dockerfile-frontend ."
             }
         }
-
+       
+        stage('Login to Docker Hub2') {
+        steps {
+            withCredentials([usernamePassword(credentialsId: env.DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USER')]) {
+                powershell "Write-Host 'Usuario Docker Hub (desde Jenkins): \$env:DOCKERHUB_USER'" // Para depurar
+                // powershell "Write-Host 'Password Docker Hub (desde Jenkins): \$env:DOCKERHUB_PASSWORD'" // ¡CUIDADO CON ESTO EN LOGS!
+                powershell "Write-Output \$env:DOCKERHUB_PASSWORD | docker login -u \$env:DOCKERHUB_USER --password-stdin"
+            }
+        }
+    }
         stage('Login to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: env.DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USER')]) {
