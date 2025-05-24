@@ -11,7 +11,6 @@ pipeline {
         APP_VERSION = "latest"
         BACKEND_IMAGE_NAME = "\$env:DOCKERHUB_USERNAME/mern-backend" // Usar \$env para PowerShell
         FRONTEND_IMAGE_NAME = "\$env:DOCKERHUB_USERNAME/mern-frontend"
-        K8S_FILES_PATH = '.' // O la ruta a tus YAMLs
     }
 
     stages {
@@ -84,13 +83,13 @@ pipeline {
         stage('Deploy to Minikube') {
             steps {
                 script {
-                    powershell "kubectl apply -f ${env.K8S_FILES_PATH}/mongo-deployment.yaml"
-                    powershell "kubectl apply -f ${env.K8S_FILES_PATH}/mongo-service.yaml"
-                    powershell "kubectl apply -f ${env.K8S_FILES_PATH}/backend-deployment.yaml"
-                    powershell "kubectl apply -f ${env.K8S_FILES_PATH}/backend-service.yaml"
-                    powershell "kubectl apply -f ${env.K8S_FILES_PATH}/frontend-deployment.yaml"
-                    powershell "kubectl apply -f ${env.K8S_FILES_PATH}/frontend-service.yaml"
-                    powershell "kubectl apply -f ${env.K8S_FILES_PATH}/ingress.yaml"
+                    powershell "kubectl apply -f mongo-deployment.yaml"
+                    powershell "kubectl apply -f mongo-service.yaml"
+                    powershell "kubectl apply -f backend-deployment.yaml"
+                    powershell "kubectl apply -f backend-service.yaml"
+                    powershell "kubectl apply -f frontend-deployment.yaml"
+                    powershell "kubectl apply -f frontend-service.yaml"
+                    powershell "kubectl apply -f ingress.yaml"
 
                     powershell "echo 'Esperando a que los despliegues estén listos...'"
                     powershell "kubectl rollout status deployment/mongo-deployment --timeout=180s"
