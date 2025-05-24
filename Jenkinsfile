@@ -15,6 +15,28 @@ pipeline {
                 echo "Código fuente extraído."
             }
         }
+        
+        stage('Run test Backend') {
+            steps {
+                dir('backend') {
+                    script {
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm install' 
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm test'
+                    }
+                }
+            }
+        }
+        
+        stage('Run test Frontend') {
+            steps {
+                dir ('client') {
+                    script {
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm install'    
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm test'
+                    }
+                }
+            }
+        }
 
         stage('Build Backend Image') {
             steps {
