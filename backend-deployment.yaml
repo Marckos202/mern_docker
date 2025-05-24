@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: mern-backend:latest 
-        imagePullPolicy: Never
+        image: marckos202/mern-backend:latest 
+        imagePullPolicy: Always
         ports:
         - containerPort: 4000 
         env:

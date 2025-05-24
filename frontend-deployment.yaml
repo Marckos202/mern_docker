@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: mern-frontend:latest 
-        imagePullPolicy: Never 
+        image: marckos202/mern-frontend:latest 
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
