@@ -19,7 +19,9 @@ pipeline {
         stage('Run test Backend') {
             steps {
                 dir('backend') {
-                    'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm test'
+                    script {
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm test'
+                    }
                 }
             }
         }
@@ -27,7 +29,9 @@ pipeline {
         stage('Run test Frontend') {
             steps {
                 dir ('client') {
-                    'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm test'
+                    script {
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm test'
+                    }
                 }
             }
         }
