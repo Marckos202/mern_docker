@@ -58,8 +58,8 @@ pipeline {
         stage('Update Kubernetes Manifests') {
             steps {
                 script {
-                    def backendDeploymentPath = "${env.K8S_FILES_PATH}/backend-deployment.yaml"
-                    def frontendDeploymentPath = "${env.K8S_FILES_PATH}/frontend-deployment.yaml"
+                    def backendDeploymentPath = "backend-deployment.yaml"
+                    def frontendDeploymentPath = "frontend-deployment.yaml"
 
                     // Actualizar backend-deployment.yaml
                     powershell """
@@ -83,7 +83,7 @@ pipeline {
         stage('Deploy to Minikube') {
             steps {
                 script {
-                    powershell "kubectl apply -f mongo-deployment.yaml"
+                    powershell 'kubectl apply -f mongo-deployment.yaml'
                     powershell "kubectl apply -f mongo-service.yaml"
                     powershell "kubectl apply -f backend-deployment.yaml"
                     powershell "kubectl apply -f backend-service.yaml"
