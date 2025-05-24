@@ -15,6 +15,22 @@ pipeline {
                 echo "Código fuente extraído."
             }
         }
+        
+        stage('Run test Backend') {
+            steps {
+                dir('backend') {
+                    powershell "npm test"
+                }
+            }
+        }
+        
+        stage('Run test Frontend') {
+            steps {
+                dir ('client') {
+                    powershell "npm test"
+                }
+            }
+        }
 
         stage('Build Backend Image') {
             steps {
