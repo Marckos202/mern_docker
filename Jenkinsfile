@@ -14,6 +14,7 @@ pipeline {
         stage('Checkout SCM') {
             steps {
                 echo "Código fuente extraído."
+                sh "ls -lah"
             }
         }
 
