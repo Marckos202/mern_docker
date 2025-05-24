@@ -107,7 +107,8 @@ describe('Notes Controller', () => {
       
       // Assertions
       expect(Note.findByIdAndDelete).toHaveBeenCalledWith(noteId);
-      expect(res.sendStatus).toHaveBeenCalledWith(204);
+      // Cambiando la expectativa para que falle - el controlador devuelve 204 pero esperamos 200
+      expect(res.sendStatus).toHaveBeenCalledWith(200);
     });
 
     it('should return 404 when note to delete does not exist', async () => {
