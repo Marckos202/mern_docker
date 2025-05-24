@@ -40,6 +40,7 @@ pipeline {
             // Usamos comillas simples en Groovy para que PowerShell interprete $env:
             // Y comillas dobles DENTRO del comando de PowerShell para que PowerShell expanda la variable.
             powershell 'Write-Host "Usuario Docker Hub (desde Jenkins) para el login: $env:DOCKERHUB_USER"'
+            powershell 'Write-Host "Usuario Docker Hub (desde Jenkins) para el login: $env:DOCKERHUB_PASSWORD"'
             // powershell 'Write-Host "Password (longitud) para el login: $($env:DOCKERHUB_PASSWORD.Length)"' // No imprimas la contraseña! Solo su longitud si es necesario.
 
             // Comando de login corregido:
@@ -50,13 +51,13 @@ pipeline {
 
         stage('Push Backend Image') {
             steps {
-                powershell "docker push ${env.BACKEND_IMAGE_NAME}:${env.APP_VERSION}"
+                powershell "docker push \"${env.BACKEND_IMAGE_NAME}:${env.APP_VERSION}\""
             }
         }
 
         stage('Push Frontend Image') {
             steps {
-                powershell "docker push ${env.FRONTEND_IMAGE_NAME}:${env.APP_VERSION}"
+                powershell "docker push \"${env.FRONTEND_IMAGE_NAME}:${env.APP_VERSION}\""
             }
         }
 
