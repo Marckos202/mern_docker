@@ -17,16 +17,24 @@ pipeline {
         }
         
         stage('Run test Backend') {
-            steps {  
-                     powershell 'cd backend'
-                     powershell 'npm test'
+            steps {
+                dir('backend') {
+                    script {
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm install' 
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm test'
+                    }
+                }
             }
         }
         
         stage('Run test Frontend') {
             steps {
-                    powershell 'cd client'
-                     powershell 'npm test'
+                dir ('client') {
+                    script {
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm install'    
+                     powershell 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; npm test'
+                    }
+                }
             }
         }
 
