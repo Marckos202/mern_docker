@@ -3,7 +3,7 @@ FROM node:19-alpine
 WORKDIR /app
 
 # Copiar los archivos de dependencias del backend
-COPY package*.json ./
+COPY backend/package*.json ./
 
 RUN npm install morgan
 
@@ -12,9 +12,9 @@ RUN npm install -g pnpm
 RUN npm install
 
 # Copiar el código fuente
-COPY src/ ./src/
+COPY backend/src/ ./src/
 
-COPY src/config.js ./src/
+COPY backend/src/config.js ./src/
 
 EXPOSE 4000
 
