@@ -32,24 +32,21 @@ pipeline {
                     powershell "docker build -t ${env.FRONTEND_IMAGE_NAME}:${env.APP_VERSION} -f Dockerfile-frontend ."
             }
         }
-       
-        stage('Login to Docker Hub2') {
-        steps {
-            withCredentials([usernamePassword(credentialsId: env.DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USER')]) {
-                powershell "Write-Host 'Usuario Docker Hub (desde Jenkins): \$env:DOCKERHUB_USER'" // Para depurar
-                // powershell "Write-Host 'Password Docker Hub (desde Jenkins): \$env:DOCKERHUB_PASSWORD'" // ¡CUIDADO CON ESTO EN LOGS!
-                powershell "Write-Output \$env:DOCKERHUB_PASSWORD | docker login -u \$env:DOCKERHUB_USER --password-stdin"
-            }
+
+        stage('Login to Docker Hub') {
+    steps {
+        withCredentials([usernamePassword(credentialsId: env.DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USER')]) {
+            // Paso de depuración (opcional, pero útil para confirmar)
+            // Usamos comillas simples en Groovy para que PowerShell interprete $env:
+            // Y comillas dobles DENTRO del comando de PowerShell para que PowerShell expanda la variable.
+            powershell 'Write-Host "Usuario Docker Hub (desde Jenkins) para el login: $env:DOCKERHUB_USER"'
+            // powershell 'Write-Host "Password (longitud) para el login: $($env:DOCKERHUB_PASSWORD.Length)"' // No imprimas la contraseña! Solo su longitud si es necesario.
+
+            // Comando de login corregido:
+            powershell 'Write-Output $env:DOCKERHUB_PASSWORD | docker login -u $env:DOCKERHUB_USER --password-stdin'
         }
     }
-        stage('Login to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: env.DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USER')]) {
-                    // PowerShell y variables de entorno
-                    powershell "Write-Output \$env:DOCKERHUB_PASSWORD | docker login -u \$env:DOCKERHUB_USER --password-stdin"
-                }
-            }
-        }
+}
 
         stage('Push Backend Image') {
             steps {
