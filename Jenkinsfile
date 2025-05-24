@@ -20,9 +20,7 @@ pipeline {
         stage('Build Backend Image') {
             steps {
                 script {
-                    dir('backend') {
                         sh "docker build -t ${env.BACKEND_IMAGE_NAME}:${env.APP_VERSION} -f Dockerfile-backend backend"
-                    }
                 }
             }
         }
@@ -30,9 +28,7 @@ pipeline {
         stage('Build Frontend Image') {
             steps {
                 script {
-                    dir('client') {
                         sh "docker build -t ${env.FRONTEND_IMAGE_NAME}:${env.APP_VERSION} -f ../Dockerfile-frontend ."
-                    }
                 }
             }
         }
