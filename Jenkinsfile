@@ -82,7 +82,7 @@ pipeline {
 
         stage('Deploy to Minikube') {
             steps {
-                    powershell 'kubectl apply -f mongo-deployment.yaml --validate=false'
+                    powershell "kubectl apply -f \"mongo-deployment.yaml\" --validate=false"
                     powershell "kubectl apply -f mongo-service.yaml --validate=false"
                     powershell "kubectl apply -f backend-deployment.yaml --validate=false"
                     powershell "kubectl apply -f backend-service.yaml --validate=false"
