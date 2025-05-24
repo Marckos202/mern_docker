@@ -82,7 +82,6 @@ pipeline {
 
         stage('Deploy to Minikube') {
             steps {
-                script {
                     powershell 'kubectl apply -f mongo-deployment.yaml'
                     powershell "kubectl apply -f mongo-service.yaml"
                     powershell "kubectl apply -f backend-deployment.yaml"
@@ -96,7 +95,6 @@ pipeline {
                     powershell "kubectl rollout status deployment/backend-deployment --timeout=180s"
                     powershell "kubectl rollout status deployment/frontend-deployment --timeout=180s"
                     powershell "echo 'Despliegues completados (o timeout).'"
-                }
             }
         }
     }
